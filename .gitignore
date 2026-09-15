@@ -1,0 +1,14 @@
+# Foundry build artifacts
+out/
+cache/
+broadcast/
+out-arc/
+cache-arc/
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store

@@ -1,0 +1,33 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+optimizer = true
+optimizer_runs = 200
+via_ir = false
+solc_version = "0.8.28"
+# MemeTokenV3 addresses are mined client-side from its creation code hash. Without a CBOR
+# metadata trailer that hash only moves when compiled code moves, not when a comment does.
+bytecode_hash = "none"
+cbor_metadata = false
+
+# Tests decode the front-end calldata fixture written by web/gen-fixture.mjs.
+fs_permissions = [{ access = "read", path = "./test/fixtures" }]
+
+# Matches the candidate runtime already used in local launch/first-buy verification.
+# Use FOUNDRY_PROFILE=candidate_release for review bundles; default builds remain independent.
+[profile.candidate_release]
+evm_version = "cancun"
+# Keep the reviewed ETH gateway metadata independent of the default V3 CREATE2 build.
+bytecode_hash = "ipfs"
+cbor_metadata = true
+
+# Circle Arc Foundry: isolated output/cache; Cancun bytecode, real Arc execution rules.
+[profile.arc]
+network = "arc"
+evm_version = "cancun"
+out = "out-arc"
+cache_path = "cache-arc"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
