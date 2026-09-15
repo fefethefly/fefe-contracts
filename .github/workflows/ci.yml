@@ -1,26 +1,26 @@
+name: CI
 
+on:
+  push:
+    branches: [main]
+  pull_request:
 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
 
+      - name: Show versions
+        run: forge --version
 
+      - name: Build
+        run: forge build
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      # Unit suite only — fork tests need external RPC access and are run
+      # separately with: forge test --match-path 'test/*Fork*'
+      - name: Unit tests
+        run: forge test --no-match-path 'test/{*Fork*,BarkTestnetSeederV3*}.t.sol'
